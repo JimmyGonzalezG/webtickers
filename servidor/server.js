@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const cors = require('cors');
 
 
 
@@ -9,7 +10,7 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3050;
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
 
 // MySql
@@ -52,12 +53,15 @@ app.get('/productos/:id', (req, res) => {
   });
 });
 
-app.post('/productosadd', (req, res) => {
+app.post('/productos', (req, res) => {
   const sql = 'INSERT INTO productos SET ?';
 
   const customerObj = {
-    name: req.body.name,
-    city: req.body.city
+    idproductos: req.body.idproductos,
+    productos: req.body.productos,
+    cantidad: req.body.cantidad,
+    precio: req.body.precio,
+    almacen: req.body.almacen
   };
 
   connection.query(sql, customerObj, error => {
@@ -66,18 +70,17 @@ app.post('/productosadd', (req, res) => {
   });
 });
 
-app.put('/productosupdate/:id', (req, res) => {
-  const { id } = req.params;
-  const { name, city } = req.body;
-  const sql = `UPDATE customers SET name = '${name}', city='${city}' WHERE id =${id}`;
+app.put('/users/:id', (request, response) => {
+  const id = request.params.id;
 
-  connection.query(sql, error => {
-    if (error) throw error;
-    res.send('Customer updated!');
+  connection.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) => {
+      if (error) throw error;
+
+      response.send('User updated successfully.');
   });
 });
 
-app.delete('/productosdelete/:id', (req, res) => {
+app.delete('/productos/:id', (req, res) => {
   const { id } = req.params;
   const sql = `DELETE FROM productos WHERE id= ${id}`;
 
@@ -118,12 +121,16 @@ app.get('/cliente/:id', (req, res) => {
   });
 });
 
-app.post('/clienteadd', (req, res) => {
+app.post('/cliente', (req, res) => {
   const sql = 'INSERT INTO cliente SET ?';
 
   const customerObj = {
-    name: req.body.name,
-    city: req.body.city
+    id_cliente: req.body.id_cliente,
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+    correo: req.body.correo,
+    tipo_de_cedula: req.body.tipo_de_cedula,
+    cedula: req.body.cedula
   };
 
   connection.query(sql, customerObj, error => {
@@ -132,18 +139,17 @@ app.post('/clienteadd', (req, res) => {
   });
 });
 
-app.put('/clienteupdate/:id', (req, res) => {
-  const { id } = req.params;
-  const { name, city } = req.body;
-  const sql = `UPDATE cliente SET name = '${name}', city='${city}' WHERE id =${id}`;
+app.put('/users/:id', (request, response) => {
+  const id = request.params.id;
 
-  connection.query(sql, error => {
-    if (error) throw error;
-    res.send('Customer updated!');
+  connection.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) => {
+      if (error) throw error;
+
+      response.send('User updated successfully.');
   });
 });
 
-app.delete('/clientedelete/:id', (req, res) => {
+app.delete('/cliente/:id', (req, res) => {
   const { id } = req.params;
   const sql = `DELETE FROM productos WHERE id= ${id}`;
 
@@ -183,12 +189,15 @@ app.get('/ventas/:id', (req, res) => {
   });
 });
 
-app.post('/ventasadd', (req, res) => {
+app.post('/ventas', (req, res) => {
   const sql = 'INSERT INTO productos SET ?';
 
   const customerObj = {
-    name: req.body.name,
-    city: req.body.city
+    idproductos: req.body.idproductos,
+    productos: req.body.productos,
+    cantidad: req.body.cantidad,
+    precio: req.body.precio,
+    almacen: req.body.almacen
   };
 
   connection.query(sql, customerObj, error => {
@@ -197,18 +206,17 @@ app.post('/ventasadd', (req, res) => {
   });
 });
 
-app.put('/ventasupdate/:id', (req, res) => {
-  const { id } = req.params;
-  const { name, city } = req.body;
-  const sql = `UPDATE ventas SET name = '${name}', city='${city}' WHERE id =${id}`;
+app.put('/ventas/:id', (request, response) => {
+  const id = request.params.id;
 
-  connection.query(sql, error => {
-    if (error) throw error;
-    res.send('cliente updated!');
+  connection.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) => {
+      if (error) throw error;
+
+      response.send('User updated successfully.');
   });
 });
 
-app.delete('/ventasdelete/:id', (req, res) => {
+app.delete('/ventas/:id', (req, res) => {
   const { id } = req.params;
   const sql = `DELETE FROM ventas WHERE id= ${id}`;
 
