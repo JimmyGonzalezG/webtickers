@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3050;
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // MySql
 const connection = mysql.createConnection({
@@ -56,13 +56,16 @@ app.get('/productos/:id', (req, res) => {
 app.post('/productos', (req, res) => {
   const sql = 'INSERT INTO productos SET ?';
 
+  console.log(req.body);
+
   const customerObj = {
-    idproductos: req.body.idproductos,
-    productos: req.body.productos,
+    id: req.body.id,
+    producto: req.body.producto,
     cantidad: req.body.cantidad,
-    precio: req.body.precio,
+    valor_unitario: req.body.valor_unitario,
     almacen: req.body.almacen
   };
+  
 
   connection.query(sql, customerObj, error => {
     if (error) throw error;
@@ -70,12 +73,11 @@ app.post('/productos', (req, res) => {
   });
 });
 
-app.put('/users/:id', (request, response) => {
+app.put('/productos/:id', (request, response) => {
   const id = request.params.id;
-
-  connection.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) => {
+  
+  connection.query('UPDATE productos SET ? WHERE id = ?', [request.body, id], (error, result) => {
       if (error) throw error;
-
       response.send('User updated successfully.');
   });
 });
@@ -83,7 +85,7 @@ app.put('/users/:id', (request, response) => {
 app.delete('/productos/:id', (req, res) => {
   const { id } = req.params;
   const sql = `DELETE FROM productos WHERE id= ${id}`;
-
+  console.log(req.body.id);
   connection.query(sql, error => {
     if (error) throw error;
     res.send('Delete customer');
@@ -125,7 +127,7 @@ app.post('/cliente', (req, res) => {
   const sql = 'INSERT INTO cliente SET ?';
 
   const customerObj = {
-    id_cliente: req.body.id_cliente,
+    id: req.body.id,
     nombre: req.body.nombre,
     apellido: req.body.apellido,
     correo: req.body.correo,
@@ -193,7 +195,7 @@ app.post('/ventas', (req, res) => {
   const sql = 'INSERT INTO productos SET ?';
 
   const customerObj = {
-    idproductos: req.body.idproductos,
+    idproductos: req.body.id,
     productos: req.body.productos,
     cantidad: req.body.cantidad,
     precio: req.body.precio,
