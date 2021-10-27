@@ -24,7 +24,7 @@ render(){
                     <Link to="/Ventas" className="cName">Ventas</Link>
                 </li>
                 <li>
-                    <Link to="/" className="cName">Usuarios</Link>
+                    <Link to="/Usuarios" className="cName">Usuarios</Link>
                 </li>
             </ul>
             
