@@ -3,6 +3,7 @@ import React from 'react'
 import { LoginButton } from '../Login/Login'
 import { LogoutButton } from '../Login/Logout'
 import Productos from '../Productos/RegistroProductos'
+import Usuarios from '../Usuarios/Usuarios'
 import {Ventas} from '../Ventas/Ventas'
 import Navbar from '../Navbar'
 import Privateroute from '../Login/Privateroute'
@@ -19,6 +20,7 @@ export default function Rutas() {
                 <Route exact path="/Profile" component={Profile}/>
                 <Privateroute exact path="/Ventas" component={Ventas}/>
                 <Privateroute exact path="/Productos" component={Productos}/>
+                <Privateroute exact path="/Usuarios" component={Usuarios}/>
                    
                 
                 
